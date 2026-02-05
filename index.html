@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositório Acadêmico - Acesso ao Conhecimento</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bege: #FFF9EB;
+            --azul-medio: #6386AC;
+            --azul-escuro: #112E4A;
+            --preto: #000000;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bege);
+            color: var(--azul-escuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navegação - AJUSTADA */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 249, 235, 0.98);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--azul-medio);
+            box-shadow: 0 2px 10px rgba(17, 46, 74, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--azul-escuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bege);
+            font-size: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--azul-escuro);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--azul-medio);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--azul-medio);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        /* Botões AJUSTADOS - mesmo formato, tamanho moderado */
+        .btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid var(--azul-escuro);
+            min-width: 120px;
+            text-align: center;
+        }
+
+        /* Botão Área do Aluno - outline */
+        .btn-outline {
+            color: var(--azul-escuro);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        /* Botão Administração - AJUSTADO para ter o mesmo efeito de inversão */
+        .btn-primary {
+            color: var(--azul-escuro);
+            background: transparent;
+        }
+
+        .btn-primary:hover {
+            background: var(--azul-escuro);
+            color: var(--bege)
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 134, 172, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 134, 172, 0.15);
+            color: var(--azul-escuro);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--azul-escuro);
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            color: var(--azul-medio);
+            position: relative;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--azul-escuro);
+            opacity: 0.8;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        .search-box {
+            background: var(--branco);
+            padding: 1rem;
+            border-radius: 50px;
+            display: flex;
+            box-shadow: 0 10px 40px rgba(17, 46, 74, 0.1);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--azul-medio);
+            box-shadow: 0 10px 40px rgba(99, 134, 172, 0.2);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            color: var(--azul-escuro);
+            background: transparent;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(17, 46, 74, 0.4);
+        }
+
+        .search-btn {
+            background: var(--azul-escuro);
+            color: var(--bege);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .search-btn:hover {
+            background: var(--azul-medio);
+            transform: scale(1.05);
+        }
+
+        .stats {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--azul-escuro);
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Image/Illustration */
+        .hero-visual {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 500px;
+            height: 500px;
+            z-index: 1;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--branco);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(17, 46, 74, 0.15);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-card:nth-child(1) {
+            top: 10%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            bottom: 20%;
+            right: 25%;
+            animation-delay: 2s;
+        }
+
+        .floating-card:nth-child(3) {
+            top: 40%;
+            right: 0%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bege);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--azul-medio);
+        }
+
+        /* Áreas de Conhecimento */
+        .areas-section {
+            padding: 6rem 5%;
+            background: linear-gradient(to bottom, var(--bege), rgba(99, 134, 172, 0.05));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            color: var(--azul-medio);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--azul-escuro);
+            opacity: 0.7;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .area-card {
+            background: var(--branco);
+            padding: 2.5rem;
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .area-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--azul-medio);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .area-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(17, 46, 74, 0.1);
+            border-color: rgba(99, 134, 172, 0.3);
+        }
+
+        .area-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .area-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--bege);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .area-card:hover .area-icon {
+            background: var(--azul-escuro);
+            transform: scale(1.1);
+        }
+
+        .area-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--azul-escuro);
+            margin-bottom: 0.8rem;
+        }
+
+        .area-count {
+            color: var(--azul-medio);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .area-desc {
+            color: var(--azul-escuro);
+            opacity: 0.7;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Destaques */
+        .highlights-section {
+            padding: 6rem 5%;
+            background: var(--azul-escuro);
+            color: var(--bege);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlights-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236386ac' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .highlights-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlights-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .highlights-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            space-y: 1rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+        }
+
+        .feature-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--azul-medio);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .highlights-image {
+            position: relative;
+        }
+
+        .image-frame {
+            background: rgba(255, 249, 235, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 249, 235, 0.2);
+        }
+
+        .recent-docs {
+            space-y: 1rem;
+        }
+
+        .doc-item {
+            background: rgba(255, 249, 235, 0.1);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .doc-item:hover {
+            background: rgba(255, 249, 235, 0.2);
+            transform: translateX(10px);
+        }
+
+        .doc-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--azul-medio);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .doc-info h4 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .doc-info p {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--preto);
+            color: var(--bege);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            opacity: 0.7;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--azul-medio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--bege);
+            text-decoration: none;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            color: var(--azul-medio);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 249, 235, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 968px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 7rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-visual {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                height: 300px;
+                margin-top: 3rem;
+            }
+
+            .stats {
+                justify-content: center;
+            }
+
+            .highlights-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+            
+            /* Ajuste dos botões no mobile */
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                min-width: 100px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+                border-radius: 20px;
+            }
+
+            .search-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 1.5rem;
+                align-items: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Navegação - AJUSTADA -->
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">📚</div>
+            LEGWER'S
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="#areas">Áreas de Conhecimento</a></li>
+            <li><a href="#acesso">Acesso Rápido</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            <a href="#" class="btn btn-outline">Área do Aluno</a>
+            <a href="#" class="btn btn-primary">Administração</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-tag fade-in">Plataforma Digital de Conhecimento</span>
+            <h1 class="fade-in delay-1">
+                Acesse o <span>conhecimento</span> acadêmico de forma organizada
+            </h1>
+            <p class="hero-description fade-in delay-2">
+                Repositório completo de artigos, publicações e materiais em PDF organizados por áreas do conhecimento. Facilitando o acesso dos alunos aos conteúdos acadêmicos.
+            </p>
+
+            <div class="search-box fade-in delay-2">
+                <input type="text" placeholder="Pesquisar por título, autor ou área...">
+                <button class="search-btn">
+                    <span>Buscar</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="stats fade-in delay-3">
+                <div class="stat-item">
+                    <span class="stat-number">600</span>
+                    <span class="stat-label">Artigos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Áreas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">200</span>
+                    <span class="stat-label">Downloads</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="floating-card">
+                <div class="card-icon">📄</div>
+                <div class="card-title">Artigo Científico</div>
+                <div class="card-meta">Ciências da Computação</div>
+            </div>
+            <div class="floating-card">
+                <div class="card-icon">🔬</div>
+                <div class="card-title">Pesquisa Aplicada</div>
+                <div class="card-meta">Engenharia</div>
+            </div>
+            <div class="floating-card">
+                <div class="card-icon">📖</div>
+                <div class="card-title">Publicação Recent</div>
+                <div class="card-meta">Medicina</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Áreas de Conhecimento -->
+    <section class="areas-section" id="areas">
+        <div class="section-header">
+            <span class="section-tag">Navegação por Categoria</span>
+            <h2 class="section-title">Áreas de Conhecimento</h2>
+            <p class="section-subtitle">Explore nosso acervo organizado por áreas acadêmicas específicas</p>
+        </div>
+
+        <div class="areas-grid">
+            <div class="area-card">
+                <div class="area-icon">💻</div>
+                <h3 class="area-title">Ciências Exatas</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">Matemática, Física, Química, Computação e Engenharias</p>
+            </div>
+
+            <div class="area-card">
+                <div class="area-icon">🧬</div>
+                <h3 class="area-title">Ciências Biológicas</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">Biologia, Medicina, Biotecnologia e Ciências da Saúde</p>
+            </div>
+
+            <div class="area-card">
+                <div class="area-icon">🏛️</div>
+                <h3 class="area-title">Ciências Humanas</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">História, Geografia, Filosofia, Sociologia e Psicologia</p>
+            </div>
+
+            <div class="area-card">
+                <div class="area-icon">📊</div>
+                <h3 class="area-title">Ciências Sociais</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">Administração, Economia, Direito e Ciências Políticas</p>
+            </div>
+
+            <div class="area-card">
+                <div class="area-icon">🎨</div>
+                <h3 class="area-title">Artes e Design</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">Artes Visuais, Música, Design e Arquitetura</p>
+            </div>
+
+            <div class="area-card">
+                <div class="area-icon">🌱</div>
+                <h3 class="area-title">Ciências Agrárias</h3>
+                <div class="area-count">100 documentos</div>
+                <p class="area-desc">Agronomia, Zootecnia, Engenharia Florestal e Meio Ambiente</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destaques -->
+    <section class="highlights-section">
+        <div class="highlights-content">
+            <div class="highlights-text">
+                <h2>Acesso facilitado para todos os estudantes</h2>
+                <p>Nossa plataforma foi desenvolvida para proporcionar a melhor experiência de navegação e leitura, com recursos modernos e interface intuitiva.</p>
+                
+                <ul class="feature-list">
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Leitura direta na plataforma sem necessidade de download</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Pesquisa avançada por título, autor ou palavras-chave</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Download de PDFs em alta qualidade</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Navegação por áreas específicas do conhecimento</span>
+                    </li>
+                    <li>
+                        <span class="feature-icon">✓</span>
+                        <span>Acesso 24/7 de qualquer dispositivo</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="highlights-image">
+                <div class="image-frame">
+                    <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif; font-size: 1.3rem;">Documentos Recentes</h3>
+                    <div class="recent-docs">
+                        <div class="doc-item">
+                            <div class="doc-icon">📑</div>
+                            <div class="doc-info">
+                                <h4>Inteligência Artificial na Educação</h4>
+                                <p>Dr. Silva • Ciência da Computação</p>
+                            </div>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-icon">📑</div>
+                            <div class="doc-info">
+                                <h4>Sustentabilidade Urbana</h4>
+                                <p>Dra. Santos • Engenharia Civil</p>
+                            </div>
+                        </div>
+                        <div class="doc-item">
+                            <div class="doc-icon">📑</div>
+                            <div class="doc-info">
+                                <h4>Novas Perspectivas em Psicologia</h4>
+                                <p>Dr. Oliveira • Psicologia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Repositório Acadêmico</h3>
+                <p>Plataforma digital dedicada à organização e disseminação do conhecimento acadêmico, facilitando o acesso dos estudantes aos materiais de estudo.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Áreas de Conhecimento</a></li>
+                    <li><a href="#">Pesquisa Avançada</a></li>
+                    <li><a href="#">Sobre o Projeto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Acesso</h4>
+                <ul>
+                    <li><a href="#">Portal do Aluno</a></li>
+                    <li><a href="#">Área Administrativa</a></li>
+                    <li><a href="#">Suporte Técnico</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="#">repositorio@academico.edu</a></li>
+                    <li><a href="#">(11) 9999-9999</a></li>
+                    <li><a href="#">Biblioteca Central</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Repositório Acadêmico. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animação suave ao rolar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efeito de navegação ao rolar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(17, 46, 74, 0.1)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(17, 46, 74, 0.1)';
+            }
+        });
+
+        // Animação de entrada dos cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.area-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
