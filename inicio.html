@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositório Acadêmico - Acesso ao Conhecimento</title>
+    <!-- Estilo do site -->
+    <link rel="stylesheet" href="/estilos/principal.css">
+    <!-- Fontes do Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Menu de navegação -->
+    <nav>
+        <a href="/" class="logo">
+            <div class="logo-icone">📚</div>
+            Repositório Acadêmico
+        </a>
+        
+        <ul class="menu">
+            <li><a href="#areas">Áreas de Conhecimento</a></li>
+            <li><a href="#acesso">Acesso Rápido</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+
+        <div class="botoes-acesso">
+            <a href="/area-aluno.html" class="botao botao-aluno">Área do Aluno</a>
+            <a href="/administracao.html" class="botao botao-admin">Administração</a>
+        </div>
+    </nav>
+
+    <!-- Seção principal (Hero) -->
+    <section class="boas-vindas">
+        <div class="conteudo-principal">
+            <span class="etiqueta">Plataforma Digital de Conhecimento</span>
+            <h1>
+                Acesse o <span>conhecimento</span> acadêmico de forma organizada
+            </h1>
+            <p class="descricao">
+                Repositório completo de artigos, publicações e materiais em PDF organizados por áreas do conhecimento. Facilitando o acesso dos alunos aos conteúdos acadêmicos.
+            </p>
+
+            <!-- Caixa de pesquisa -->
+            <div class="caixa-pesquisa">
+                <input type="text" id="campoPesquisa" placeholder="Pesquisar por título, autor ou área...">
+                <button class="botao-pesquisar" onclick="pesquisar()">
+                    <span>Buscar</span>
+                    🔍
+                </button>
+            </div>
+
+            <!-- Números do site -->
+            <div class="numeros">
+                <div class="numero-item">
+                    <span class="numero-valor" id="quantidadeArtigos">0</span>
+                    <span class="numero-legenda">Artigos</span>
+                </div>
+                <div class="numero-item">
+                    <span class="numero-valor" id="quantidadeAreas">0</span>
+                    <span class="numero-legenda">Áreas</span>
+                </div>
+                <div class="numero-item">
+                    <span class="numero-valor" id="quantidadeDownloads">0</span>
+                    <span class="numero-legenda">Downloads</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards flutuantes decorativos -->
+        <div class="cartoes-flutuantes">
+            <div class="cartao">
+                <div class="cartao-icone">📄</div>
+                <div class="cartao-titulo">Artigo Científico</div>
+                <div class="cartao-area">Ciências da Computação</div>
+            </div>
+            <div class="cartao">
+                <div class="cartao-icone">🔬</div>
+                <div class="cartao-titulo">Pesquisa Aplicada</div>
+                <div class="cartao-area">Engenharia</div>
+            </div>
+            <div class="cartao">
+                <div class="cartao-icone">📖</div>
+                <div class="cartao-titulo">Publicação Recente</div>
+                <div class="cartao-area">Medicina</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de áreas de conhecimento -->
+    <section class="secao-areas" id="areas">
+        <div class="cabecalho-secao">
+            <span class="etiqueta-secao">Navegação por Categoria</span>
+            <h2>Áreas de Conhecimento</h2>
+            <p>Explore nosso acervo organizado por áreas acadêmicas específicas</p>
+        </div>
+
+        <!-- Onde as áreas vão aparecer (carregado pelo JavaScript) -->
+        <div class="grade-areas" id="listaDeAreas">
+            <p class="carregando">Carregando áreas...</p>
+        </div>
+    </section>
+
+    <!-- Seção de acesso rápido -->
+    <section class="secao-acesso" id="acesso">
+        <div class="cabecalho-secao">
+            <span class="etiqueta-secao">Funcionalidades</span>
+            <h2>Acesso Rápido</h2>
+        </div>
+        
+        <div class="grade-acesso">
+            <div class="cartao-acesso" onclick="abrirFavoritos()">
+                <div class="acesso-icone">⭐</div>
+                <h3>Meus Favoritos</h3>
+                <p>Acesse seus documentos salvos</p>
+            </div>
+            
+            <div class="cartao-acesso" onclick="abrirHistorico()">
+                <div class="acesso-icone">⏱️</div>
+                <h3>Histórico</h3>
+                <p>Documentos que você visualizou</p>
+            </div>
+            
+            <div class="cartao-acesso" onclick="abrirDownloads()">
+                <div class="acesso-icone">📥</div>
+                <h3>Downloads</h3>
+                <p>Arquivos que você baixou</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de destaques -->
+    <section class="secao-destaques">
+        <div class="conteudo-destaques">
+            <div class="texto-destaques">
+                <h2>Acesso facilitado para todos os estudantes</h2>
+                <p>Nossa plataforma foi desenvolvida para proporcionar a melhor experiência de navegação e leitura, com recursos modernos e interface intuitiva.</p>
+                
+                <ul class="lista-beneficios">
+                    <li><span class="icone-check">✓</span><span>Leitura direta na plataforma sem necessidade de download</span></li>
+                    <li><span class="icone-check">✓</span><span>Pesquisa avançada por título, autor ou palavras-chave</span></li>
+                    <li><span class="icone-check">✓</span><span>Download de PDFs em alta qualidade</span></li>
+                    <li><span class="icone-check">✓</span><span>Navegação por áreas específicas do conhecimento</span></li>
+                    <li><span class="icone-check">✓</span><span>Acesso 24 horas por dia, 7 dias por semana</span></li>
+                </ul>
+            </div>
+
+            <div class="painel-documentos">
+                <div class="quadro-documentos">
+                    <h3>Documentos Recentes</h3>
+                    <div id="documentosRecentes">
+                        <!-- Documentos carregados pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="conteudo-rodape">
+            <div class="marca-rodape">
+                <h3>Repositório Acadêmico</h3>
+                <p>Plataforma digital dedicada à organização e disseminação do conhecimento acadêmico, facilitando o acesso dos estudantes aos materiais de estudo.</p>
+            </div>
+            
+            <div class="coluna-rodape">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#areas">Áreas de Conhecimento</a></li>
+                    <li><a href="#">Pesquisa Avançada</a></li>
+                    <li><a href="#">Sobre o Projeto</a></li>
+                </ul>
+            </div>
+
+            <div class="coluna-rodape">
+                <h4>Acesso</h4>
+                <ul>
+                    <li><a href="#">Portal do Aluno</a></li>
+                    <li><a href="#">Área Administrativa</a></li>
+                    <li><a href="#">Suporte Técnico</a></li>
+                    <li><a href="#">Perguntas Frequentes</a></li>
+                </ul>
+            </div>
+
+            <div class="coluna-rodape">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="#">repositorio@academico.edu</a></li>
+                    <li><a href="#">(244) 9999-9999</a></li>
+                    <li><a href="#">Biblioteca Central</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="assinatura-rodape">
+            <p>&copy; 2026 Repositório Acadêmico. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript do site -->
+    <script src="/scripts/site.js"></script>
+</body>
+</html>

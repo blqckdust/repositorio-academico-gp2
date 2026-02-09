@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "titulo": "Inteligência Artificial na Educação",
+        "autor": "Dr. Silva",
+        "area": "Ciência da Computação"
+    },
+    {
+        "id": 2,
+        "titulo": "Sustentabilidade Urbana",
+        "autor": "Dra. Santos",
+        "area": "Engenharia Civil"
+    },
+    {
+        "id": 3,
+        "titulo": "Novas Perspectivas em Psicologia",
+        "autor": "Dr. Oliveira",
+        "area": "Psicologia"
+    },
+    {
+        "id": 4,
+        "titulo": "Avanços em Biotecnologia",
+        "autor": "Dra. Costa",
+        "area": "Biologia"
+    },
+    {
+        "id": 5,
+        "titulo": "Economia Circular",
+        "autor": "Dr. Pereira",
+        "area": "Economia"
+    }
+]
