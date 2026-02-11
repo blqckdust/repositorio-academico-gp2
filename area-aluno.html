@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - LEGWER'S</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bege: #FFF9EB;
+            --azul-medio: #6386AC;
+            --azul-escuro: #112E4A;
+            --preto: #000000;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bege);
+            color: var(--azul-escuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 249, 235, 0.98);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--azul-medio);
+            box-shadow: 0 2px 10px rgba(17, 46, 74, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--azul-escuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bege);
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--azul-escuro);
+            color: var(--azul-escuro);
+            background: transparent;
+        }
+
+        .btn-back:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 134, 172, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .auth-card {
+            background: var(--branco);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(17, 46, 74, 0.15);
+            max-width: 480px;
+            width: 100%;
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+            border: 2px solid rgba(99, 134, 172, 0.1);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--bege);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--azul-medio);
+        }
+
+        .auth-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: var(--azul-escuro);
+            opacity: 0.7;
+            font-size: 0.95rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(99, 134, 172, 0.2);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            background: transparent;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--azul-escuro);
+            opacity: 0.5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .auth-tab.active {
+            opacity: 1;
+            border-bottom-color: var(--azul-medio);
+        }
+
+        .auth-tab:hover {
+            opacity: 0.8;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--azul-escuro);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid rgba(99, 134, 172, 0.3);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            color: var(--azul-escuro);
+            background: var(--bege);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--azul-medio);
+            background: var(--branco);
+            box-shadow: 0 0 0 4px rgba(99, 134, 172, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: rgba(17, 46, 74, 0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--azul-escuro);
+            color: var(--bege);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            background: var(--azul-medio);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(17, 46, 74, 0.2);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: var(--azul-medio);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: var(--azul-escuro);
+            text-decoration: underline;
+        }
+
+        .dashboard {
+            display: none;
+            padding-top: 6rem;
+            padding-bottom: 4rem;
+        }
+
+        .dashboard.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 0 5%;
+        }
+
+        .welcome-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(99, 134, 172, 0.15);
+            color: var(--azul-escuro);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .dashboard-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: var(--azul-escuro);
+            opacity: 0.7;
+            font-size: 1.1rem;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--azul-escuro);
+            color: var(--azul-escuro);
+            background: transparent;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .logout-btn:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .courses-container {
+            padding: 0 5%;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .course-card {
+            background: var(--branco);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(17, 46, 74, 0.1);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(17, 46, 74, 0.15);
+            border-color: var(--azul-medio);
+        }
+
+        .course-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-medio) 100%);
+            color: var(--bege);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 249, 235, 0.1);
+            border-radius: 50%;
+        }
+
+        .course-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 249, 235, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .course-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-subtitle {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-body {
+            padding: 2rem;
+        }
+
+        .course-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(99, 134, 172, 0.1);
+        }
+
+        .stat {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--azul-escuro);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .course-description {
+            color: var(--azul-escuro);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-access {
+            padding: 0.7rem 1.5rem;
+            background: var(--azul-escuro);
+            color: var(--bege);
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-access:hover {
+            background: var(--azul-medio);
+            transform: translateX(5px);
+        }
+
+        .course-tag {
+            padding: 0.4rem 0.8rem;
+            background: rgba(99, 134, 172, 0.15);
+            color: var(--azul-escuro);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">📚</div>
+            LEGWER'S
+        </a>
+        
+        <a href="index.html" class="btn-back">← Voltar ao Início</a>
+    </nav>
+
+    <div class="main-container" id="authContainer">
+        <div class="auth-card fade-in">
+            <div class="auth-header">
+                <div class="auth-icon">👨‍🎓</div>
+                <h1>Área do Aluno</h1>
+                <p>Acesse seus cursos e materiais acadêmicos</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
+                <button class="auth-tab" onclick="switchTab('register')">Criar Conta</button>
+            </div>
+
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email Institucional</label>
+                    <input type="email" class="form-input" placeholder="seu.nome@estudante.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-input" placeholder="Digite sua senha" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Entrar na Plataforma</button>
+
+                <div class="forgot-password">
+                    <a href="#">Esqueceu sua senha?</a>
+                </div>
+            </form>
+
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-input" placeholder="João" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sobrenome</label>
+                        <input type="text" class="form-input" placeholder="Silva" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email Institucional</label>
+                    <input type="email" class="form-input" placeholder="seu.nome@estudante.edu" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Matrícula</label>
+                    <input type="text" class="form-input" placeholder="202400000" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Curso</label>
+                    <input type="text" class="form-input" placeholder="Ex: Ciência da Computação" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Senha</label>
+                        <input type="password" class="form-input" placeholder="Mínimo 8 caracteres" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmar Senha</label>
+                        <input type="password" class="form-input" placeholder="Repita a senha" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Criar Conta</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <span class="welcome-tag">BEM-VINDO DE VOLTA</span>
+            <h1 id="studentName">Seus Cursos</h1>
+            <p>Acesse seus materiais, aulas e conteúdos acadêmicos</p>
+            <button class="logout-btn" onclick="handleLogout()">Sair da Conta</button>
+        </div>
+
+        <div class="courses-container">
+            <div class="courses-grid">
+                <div class="course-card fade-in delay-1">
+                    <div class="course-header">
+                        <div class="course-icon">💻</div>
+                        <h3 class="course-title">Ciência da Computação</h3>
+                        <p class="course-subtitle">Algoritmos e Estruturas de Dados</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">24</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">8</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Explore algoritmos clássicos, estruturas de dados fundamentais e técnicas de otimização.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Ciências Exatas</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card fade-in delay-2">
+                    <div class="course-header">
+                        <div class="course-icon">🧬</div>
+                        <h3 class="course-title">Biologia Molecular</h3>
+                        <p class="course-subtitle">Genética e Biotecnologia</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">18</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">6</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Estudos avançados em genética, expressão gênica e aplicações biotecnológicas modernas.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Ciências Biológicas</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card fade-in delay-3">
+                    <div class="course-header">
+                        <div class="course-icon">⚖️</div>
+                        <h3 class="course-title">Direito Constitucional</h3>
+                        <p class="course-subtitle">Fundamentos Jurídicos</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">15</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">5</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Princípios constitucionais, direitos fundamentais e organização do Estado brasileiro.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Ciências Sociais</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card fade-in delay-4">
+                    <div class="course-header">
+                        <div class="course-icon">🎨</div>
+                        <h3 class="course-title">Artes e Design</h3>
+                        <p class="course-subtitle">Teoria e Prática Visual</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">12</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">4</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Fundamentos de composição visual, tipografia, teoria das cores e design editorial.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Artes e Design</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card fade-in delay-1">
+                    <div class="course-header">
+                        <div class="course-icon">🏗️</div>
+                        <h3 class="course-title">Engenharia Civil</h3>
+                        <p class="course-subtitle">Estruturas e Materiais</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">20</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">7</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Análise estrutural, mecânica dos materiais e projetos de construção civil.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Ciências Exatas</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="course-card fade-in delay-2">
+                    <div class="course-header">
+                        <div class="course-icon">🌍</div>
+                        <h3 class="course-title">Geografia Humana</h3>
+                        <p class="course-subtitle">Sociedade e Território</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">14</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">5</span>
+                                <span class="stat-label">Tópicos</span>
+                            </div>
+                        </div>
+                        <p class="course-description">
+                            Urbanização, migração, desenvolvimento regional e transformações socioespaciais.
+                        </p>
+                        <div class="course-footer">
+                            <span class="course-tag">Ciências Humanas</span>
+                            <button class="btn-access">
+                                Acessar
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const tabs = document.querySelectorAll('.auth-tab');
+
+            tabs.forEach(t => t.classList.remove('active'));
+
+            if (tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                tabs[0].classList.add('active');
+            } else {
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                tabs[1].classList.add('active');
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = event.target[0].value;
+            const name = email.split('@')[0].replace('.', ' ');
+            
+            document.getElementById('authContainer').style.display = 'none';
+            
+            const dashboard = document.getElementById('dashboard');
+            dashboard.classList.add('active');
+            
+            document.getElementById('studentName').textContent = `Olá, ${name.charAt(0).toUpperCase() + name.slice(1)}!`;
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const password = event.target.querySelector('input[type="password"]').value;
+            const confirmPassword = event.target.querySelectorAll('input[type="password"]')[1].value;
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+
+            alert('Conta criada com sucesso! Faça login para continuar.');
+            
+            switchTab('login');
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboard').classList.remove('active');
+            
+            document.getElementById('authContainer').style.display = 'flex';
+            
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+        }
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(17, 46, 74, 0.15)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(17, 46, 74, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
