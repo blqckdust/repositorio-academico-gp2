@@ -55,11 +55,21 @@ aplicativo.get('/informacoes-do-site', (requisicao, resposta) => {
 });
 
 // Ligar o sistema
-aplicativo.listen(PORTA, () => {
+aplicativo.listen(PORTA, '0.0.0.0', () => {
     console.log('========================================');
     console.log('📚 REPOSITÓRIO ACADÊMICO');
     console.log('========================================');
-    console.log('Seu trabalho está no ar!');
-    console.log('Acesse: http://localhost:' + PORTA);
+    console.log('Acesse no PC: http://localhost:' + PORTA);
+    console.log('Acesse no celular: http://192.168.1.130:' + PORTA);
     console.log('========================================');
+});
+
+// Página Sobre
+aplicativo.get('/sobre', (requisicao, resposta) => {
+    resposta.sendFile(caminho.join(__dirname, 'paginas', 'sobre.html'));
+});
+
+// Página Contacto
+aplicativo.get('/contacto', (requisicao, resposta) => {
+    resposta.sendFile(caminho.join(__dirname, 'paginas', 'contacto.html'));
 });
