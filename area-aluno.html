@@ -16,7 +16,8 @@
             --bege: #FFF9EB;
             --azul-medio: #6386AC;
             --azul-escuro: #112E4A;
-            --preto: #000000;
+            --vermelho: #C75450;
+            --verde: #50C78E;
             --branco: #FFFFFF;
         }
 
@@ -25,9 +26,9 @@
             background-color: var(--bege);
             color: var(--azul-escuro);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
+        /* Navegação */
         nav {
             position: fixed;
             top: 0;
@@ -82,31 +83,17 @@
             color: var(--bege);
         }
 
-        .main-container {
+        /* Container de Login */
+        .tela-login {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 8rem 5% 4rem;
-            position: relative;
-            overflow: hidden;
         }
 
-        .main-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(99, 134, 172, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        .tela-login.escondido {
+            display: none;
         }
 
         .auth-card {
@@ -116,8 +103,6 @@
             max-width: 480px;
             width: 100%;
             padding: 3rem;
-            position: relative;
-            z-index: 2;
             border: 2px solid rgba(99, 134, 172, 0.1);
         }
 
@@ -152,6 +137,28 @@
             font-size: 0.95rem;
         }
 
+        /* Alerta de erro */
+        .alerta-erro {
+            background: var(--vermelho);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .alerta-erro.ativo {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Abas */
         .auth-tabs {
             display: flex;
             gap: 1rem;
@@ -180,28 +187,19 @@
             border-bottom-color: var(--azul-medio);
         }
 
-        .auth-tab:hover {
-            opacity: 0.8;
-        }
-
+        /* Formulários */
         .auth-form {
             display: none;
         }
 
-        .auth-form.active {
+        .auth-form.ativo {
             display: block;
             animation: fadeIn 0.4s ease;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .form-group {
@@ -233,10 +231,6 @@
             border-color: var(--azul-medio);
             background: var(--branco);
             box-shadow: 0 0 0 4px rgba(99, 134, 172, 0.1);
-        }
-
-        .form-input::placeholder {
-            color: rgba(17, 46, 74, 0.4);
         }
 
         .form-row {
@@ -276,7 +270,6 @@
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.3s ease;
         }
 
         .forgot-password a:hover {
@@ -284,13 +277,14 @@
             text-decoration: underline;
         }
 
-        .dashboard {
+        /* DASHBOARD - Inicialmente escondido */
+        .tela-dashboard {
             display: none;
-            padding-top: 6rem;
-            padding-bottom: 4rem;
+            padding: 8rem 5% 4rem;
+            min-height: 100vh;
         }
 
-        .dashboard.active {
+        .tela-dashboard.ativo {
             display: block;
             animation: fadeIn 0.6s ease;
         }
@@ -298,7 +292,6 @@
         .dashboard-header {
             text-align: center;
             margin-bottom: 3rem;
-            padding: 0 5%;
         }
 
         .welcome-tag {
@@ -310,7 +303,6 @@
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            letter-spacing: 0.5px;
         }
 
         .dashboard-header h1 {
@@ -326,36 +318,82 @@
             font-size: 1.1rem;
         }
 
-        .logout-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-            border: 2px solid var(--azul-escuro);
-            color: var(--azul-escuro);
-            background: transparent;
-            cursor: pointer;
-            display: inline-block;
-            margin-top: 1rem;
+        /* User Header */
+        .user-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: var(--branco);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .logout-btn:hover {
+        .user-avatar {
+            width: 60px;
+            height: 60px;
             background: var(--azul-escuro);
             color: var(--bege);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
         }
 
+        .user-info h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.2rem;
+        }
+
+        .user-info p {
+            font-size: 0.9rem;
+            color: var(--azul-medio);
+        }
+
+        /* Botão Repositório */
+        .btn-repositorio {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--verde);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(80, 199, 142, 0.3);
+        }
+
+        .btn-repositorio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(80, 199, 142, 0.4);
+        }
+
+        /* Cursos */
         .courses-container {
-            padding: 0 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .courses-container h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1.5rem;
+            color: var(--azul-escuro);
+            text-align: center;
         }
 
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         .course-card {
@@ -363,78 +401,55 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(17, 46, 74, 0.1);
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .course-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(17, 46, 74, 0.15);
-            border-color: var(--azul-medio);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(17, 46, 74, 0.15);
         }
 
         .course-header {
-            padding: 2rem;
+            padding: 1.5rem;
             background: linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-medio) 100%);
             color: var(--bege);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .course-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 249, 235, 0.1);
-            border-radius: 50%;
         }
 
         .course-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(255, 249, 235, 0.2);
-            border-radius: 15px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            backdrop-filter: blur(10px);
         }
 
         .course-title {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 1;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
         }
 
         .course-subtitle {
             opacity: 0.9;
-            font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
+            font-size: 0.85rem;
         }
 
         .course-body {
-            padding: 2rem;
+            padding: 1.5rem;
         }
 
         .course-stats {
             display: flex;
             gap: 2rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 2px solid rgba(99, 134, 172, 0.1);
+            margin-bottom: 1rem;
         }
 
         .stat {
-            flex: 1;
+            text-align: center;
         }
 
         .stat-value {
@@ -442,172 +457,159 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--azul-escuro);
-            display: block;
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            color: var(--azul-escuro);
-            opacity: 0.6;
+            font-size: 0.75rem;
+            color: var(--azul-medio);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .course-description {
-            color: var(--azul-escuro);
-            opacity: 0.8;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .course-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .btn-access {
+            display: inline-block;
             padding: 0.7rem 1.5rem;
             background: var(--azul-escuro);
             color: var(--bege);
-            border: none;
+            text-decoration: none;
             border-radius: 10px;
             font-weight: 600;
             font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            transition: all 0.3s;
         }
 
         .btn-access:hover {
             background: var(--azul-medio);
-            transform: translateX(5px);
         }
 
-        .course-tag {
-            padding: 0.4rem 0.8rem;
-            background: rgba(99, 134, 172, 0.15);
+        /* Logout */
+        .logout-btn {
+            padding: 0.8rem 2rem;
+            background: transparent;
             color: var(--azul-escuro);
-            border-radius: 8px;
-            font-size: 0.8rem;
+            border: 2px solid var(--azul-escuro);
+            border-radius: 12px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .logout-btn:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
         }
 
         @media (max-width: 768px) {
-            .auth-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .dashboard-header h1 {
-                font-size: 2.2rem;
-            }
-
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-
             .form-row {
                 grid-template-columns: 1fr;
             }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
             }
         }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
+    <!-- NAVEGAÇÃO -->
     <nav>
-        <a href="inicio.html" class="logo">
+        <a href="index.html" class="logo">
             <div class="logo-icon">📚</div>
             LEGWER'S
         </a>
-        
-        <a href="inicio.html" class="btn-back">← Voltar ao Início</a>
+        <a href="index.html" class="btn-back">← Voltar ao Início</a>
     </nav>
 
-    <div class="main-container" id="authContainer">
-        <div class="auth-card fade-in">
+    <!-- ========================================== -->
+    <!-- TELA DE LOGIN (mostrada inicialmente) -->
+    <!-- ========================================== -->
+    <div class="tela-login" id="telaLogin">
+        <div class="auth-card">
             <div class="auth-header">
-                <div class="auth-icon">👨‍🎓</div>
+                <div class="auth-icon">🔐</div>
                 <h1>Área do Aluno</h1>
                 <p>Acesse seus cursos e materiais acadêmicos</p>
             </div>
 
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchTab('login')">Entrar</button>
-                <button class="auth-tab" onclick="switchTab('register')">Criar Conta</button>
+            <!-- Alerta de erro -->
+            <div class="alerta-erro" id="alertaErro">
+                ⚠️ Email ou senha incorretos
             </div>
 
-            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+            <!-- Abas -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="mostrarAba('login')">Entrar</button>
+                <button class="auth-tab" onclick="mostrarAba('cadastro')">Criar Conta</button>
+            </div>
+
+            <!-- Formulário de Login -->
+            <form class="auth-form ativo" id="formLogin" onsubmit="fazerLogin(event)">
                 <div class="form-group">
                     <label class="form-label">Email Institucional</label>
-                    <input type="email" class="form-input" placeholder="seu.nome@estudante.edu" required>
+                    <input type="email" class="form-input" id="loginEmail" placeholder="aluno@legwers.edu" required>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Senha</label>
-                    <input type="password" class="form-input" placeholder="Digite sua senha" required>
+                    <input type="password" class="form-input" id="loginSenha" placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="lembrarMe" style="width: auto;">
+                    <label for="lembrarMe" style="margin: 0; font-weight: normal;">Lembrar-me</label>
                 </div>
 
                 <button type="submit" class="btn-submit">Entrar na Plataforma</button>
 
                 <div class="forgot-password">
-                    <a href="#">Esqueceu sua senha?</a>
+                    <a href="#" onclick="alert('Contate o suporte técnico')">Esqueceu sua senha?</a>
                 </div>
             </form>
 
-            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+            <!-- Formulário de Cadastro -->
+            <form class="auth-form" id="formCadastro" onsubmit="fazerCadastro(event)">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nome</label>
-                        <input type="text" class="form-input" placeholder="João" required>
+                        <input type="text" class="form-input" id="cadNome" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Sobrenome</label>
-                        <input type="text" class="form-input" placeholder="Silva" required>
+                        <input type="text" class="form-input" id="cadSobrenome" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Email Institucional</label>
-                    <input type="email" class="form-input" placeholder="seu.nome@estudante.edu" required>
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" id="cadEmail" required>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Matrícula</label>
-                    <input type="text" class="form-input" placeholder="202400000" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Curso</label>
-                    <input type="text" class="form-input" placeholder="Ex: Ciência da Computação" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Matrícula</label>
+                        <input type="text" class="form-input" id="cadMatricula" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Curso</label>
+                        <select class="form-input" id="cadCurso" required>
+                            <option value="">Selecione...</option>
+                            <option value="Ciência da Computação">Ciência da Computação</option>
+                            <option value="Engenharia">Engenharia</option>
+                            <option value="Medicina">Medicina</option>
+                            <option value="Direito">Direito</option>
+                            <option value="Psicologia">Psicologia</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Senha</label>
-                        <input type="password" class="form-input" placeholder="Mínimo 8 caracteres" required>
+                        <input type="password" class="form-input" id="cadSenha" minlength="6" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Confirmar Senha</label>
-                        <input type="password" class="form-input" placeholder="Repita a senha" required>
+                        <input type="password" class="form-input" id="cadConfirmar" required>
                     </div>
                 </div>
 
@@ -616,265 +618,253 @@
         </div>
     </div>
 
-    <div class="dashboard" id="dashboard">
+    <!-- ========================================== -->
+    <!-- TELA DO DASHBOARD (escondida inicialmente) -->
+    <!-- ========================================== -->
+    <div class="tela-dashboard" id="telaDashboard">
         <div class="dashboard-header">
-            <span class="welcome-tag">BEM-VINDO DE VOLTA</span>
-            <h1 id="studentName">Seus Cursos</h1>
-            <p>Acesse seus materiais, aulas e conteúdos acadêmicos</p>
-            <button class="logout-btn" onclick="handleLogout()">Sair da Conta</button>
+            <span class="welcome-tag">BEM-VINDO</span>
+            <h1>Olá, <span id="nomeUsuario">Aluno</span>!</h1>
+            <p>Pronto para acessar o conhecimento?</p>
         </div>
 
-        <div class="courses-container">
-            <div class="courses-grid">
-                <div class="course-card fade-in delay-1">
-                    <div class="course-header">
-                        <div class="course-icon">💻</div>
-                        <h3 class="course-title">Ciência da Computação</h3>
-                        <p class="course-subtitle">Algoritmos e Estruturas de Dados</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">24</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">8</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Explore algoritmos clássicos, estruturas de dados fundamentais e técnicas de otimização.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Ciências Exatas</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card fade-in delay-2">
-                    <div class="course-header">
-                        <div class="course-icon">🧬</div>
-                        <h3 class="course-title">Biologia Molecular</h3>
-                        <p class="course-subtitle">Genética e Biotecnologia</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">18</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">6</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Estudos avançados em genética, expressão gênica e aplicações biotecnológicas modernas.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Ciências Biológicas</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card fade-in delay-3">
-                    <div class="course-header">
-                        <div class="course-icon">⚖️</div>
-                        <h3 class="course-title">Direito Constitucional</h3>
-                        <p class="course-subtitle">Fundamentos Jurídicos</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">15</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">5</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Princípios constitucionais, direitos fundamentais e organização do Estado brasileiro.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Ciências Sociais</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card fade-in delay-4">
-                    <div class="course-header">
-                        <div class="course-icon">🎨</div>
-                        <h3 class="course-title">Artes e Design</h3>
-                        <p class="course-subtitle">Teoria e Prática Visual</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">12</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">4</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Fundamentos de composição visual, tipografia, teoria das cores e design editorial.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Artes e Design</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card fade-in delay-1">
-                    <div class="course-header">
-                        <div class="course-icon">🏗️</div>
-                        <h3 class="course-title">Engenharia Civil</h3>
-                        <p class="course-subtitle">Estruturas e Materiais</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">20</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">7</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Análise estrutural, mecânica dos materiais e projetos de construção civil.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Ciências Exatas</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="course-card fade-in delay-2">
-                    <div class="course-header">
-                        <div class="course-icon">🌍</div>
-                        <h3 class="course-title">Geografia Humana</h3>
-                        <p class="course-subtitle">Sociedade e Território</p>
-                    </div>
-                    <div class="course-body">
-                        <div class="course-stats">
-                            <div class="stat">
-                                <span class="stat-value">14</span>
-                                <span class="stat-label">Artigos</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-value">5</span>
-                                <span class="stat-label">Tópicos</span>
-                            </div>
-                        </div>
-                        <p class="course-description">
-                            Urbanização, migração, desenvolvimento regional e transformações socioespaciais.
-                        </p>
-                        <div class="course-footer">
-                            <span class="course-tag">Ciências Humanas</span>
-                            <button class="btn-access">
-                                Acessar
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Info do usuário -->
+        <div class="user-header">
+            <div class="user-avatar">👤</div>
+            <div class="user-info">
+                <h3 id="nomeCompleto">Nome do Aluno</h3>
+                <p id="emailUsuario">email@estudante.edu</p>
+                <p>Matrícula: <span id="matriculaUsuario">000000</span> | Curso: <span id="cursoUsuario">Curso</span></p>
             </div>
+        </div>
+
+        <!-- Botão principal -->
+        <div style="text-align: center;">
+            <a href="areas.html" class="btn-repositorio">
+                📚 Acessar Repositório de Documentos →
+            </a>
+            <p style="color: var(--azul-medio); margin-top: 1rem;">
+                Explore artigos, teses e materiais acadêmicos
+            </p>
+        </div>
+
+        <!-- Cursos -->
+        <div class="courses-container" style="margin-top: 3rem;">
+            <h2>Seus Cursos</h2>
+            <div class="courses-grid" id="gridCursos">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="logout-btn" onclick="sair()">Sair da Conta</button>
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT (tudo em um lugar) -->
+    <!-- ========================================== -->
     <script>
-        function switchTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
+        // ==========================================
+        // DADOS E CONFIGURAÇÃO
+        // ==========================================
+        
+        // Usuário de teste (para login funcionar sem cadastro)
+        const USUARIO_TESTE = {
+            nome: 'João Silva',
+            email: 'aluno@legwers.edu',
+            senha: '123456',
+            matricula: '202400001',
+            curso: 'Ciência da Computação'
+        };
+
+        // ==========================================
+        // FUNÇÕES DE TELA
+        // ==========================================
+
+        function mostrarAba(aba) {
+            const formLogin = document.getElementById('formLogin');
+            const formCadastro = document.getElementById('formCadastro');
             const tabs = document.querySelectorAll('.auth-tab');
 
-            tabs.forEach(t => t.classList.remove('active'));
+            // Esconde alerta
+            document.getElementById('alertaErro').classList.remove('ativo');
 
-            if (tab === 'login') {
-                loginForm.classList.add('active');
-                registerForm.classList.remove('active');
+            if (aba === 'login') {
+                formLogin.classList.add('ativo');
+                formCadastro.classList.remove('ativo');
                 tabs[0].classList.add('active');
+                tabs[1].classList.remove('active');
             } else {
-                registerForm.classList.add('active');
-                loginForm.classList.remove('active');
+                formLogin.classList.remove('ativo');
+                formCadastro.classList.add('ativo');
+                tabs[0].classList.remove('active');
                 tabs[1].classList.add('active');
             }
         }
 
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = event.target[0].value;
-            const name = email.split('@')[0].replace('.', ' ');
-            
-            document.getElementById('authContainer').style.display = 'none';
-            
-            const dashboard = document.getElementById('dashboard');
-            dashboard.classList.add('active');
-            
-            document.getElementById('studentName').textContent = `Olá, ${name.charAt(0).toUpperCase() + name.slice(1)}!`;
+        function mostrarLogin() {
+            document.getElementById('telaLogin').classList.remove('escondido');
+            document.getElementById('telaDashboard').classList.remove('ativo');
         }
 
-        function handleRegister(event) {
+        function mostrarDashboard(usuario) {
+            document.getElementById('telaLogin').classList.add('escondido');
+            document.getElementById('telaDashboard').classList.add('ativo');
+
+            // Preenche dados
+            document.getElementById('nomeUsuario').textContent = usuario.nome.split(' ')[0];
+            document.getElementById('nomeCompleto').textContent = usuario.nome;
+            document.getElementById('emailUsuario').textContent = usuario.email;
+            document.getElementById('matriculaUsuario').textContent = usuario.matricula;
+            document.getElementById('cursoUsuario').textContent = usuario.curso;
+
+            // Carrega cursos
+            carregarCursos(usuario.curso);
+        }
+
+        // ==========================================
+        // LOGIN E CADASTRO
+        // ==========================================
+
+        function fazerLogin(event) {
             event.preventDefault();
             
-            const password = event.target.querySelector('input[type="password"]').value;
-            const confirmPassword = event.target.querySelectorAll('input[type="password"]')[1].value;
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
+            const lembrar = document.getElementById('lembrarMe').checked;
+
+            // Verifica usuário de teste OU usuários cadastrados
+            let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            usuarios.push(USUARIO_TESTE); // Sempre permite login de teste
             
-            if (password !== confirmPassword) {
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+
+            if (usuario) {
+                // Salva sessão
+                const sessao = {
+                    ...usuario,
+                    loginEm: new Date().toISOString()
+                };
+                
+                if (lembrar) {
+                    localStorage.setItem('sessao', JSON.stringify(sessao));
+                } else {
+                    sessionStorage.setItem('sessao', JSON.stringify(sessao));
+                }
+
+                mostrarDashboard(usuario);
+                
+            } else {
+                document.getElementById('alertaErro').classList.add('ativo');
+            }
+        }
+
+        function fazerCadastro(event) {
+            event.preventDefault();
+            
+            const senha = document.getElementById('cadSenha').value;
+            const confirmar = document.getElementById('cadConfirmar').value;
+
+            if (senha !== confirmar) {
                 alert('As senhas não coincidem!');
                 return;
             }
 
-            alert('Conta criada com sucesso! Faça login para continuar.');
-            
-            switchTab('login');
+            const novoUsuario = {
+                nome: document.getElementById('cadNome').value + ' ' + document.getElementById('cadSobrenome').value,
+                email: document.getElementById('cadEmail').value,
+                senha: senha,
+                matricula: document.getElementById('cadMatricula').value,
+                curso: document.getElementById('cadCurso').value
+            };
+
+            // Salva
+            let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
+            usuarios.push(novoUsuario);
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+            alert('Conta criada! Faça login.');
+            mostrarAba('login');
+            document.getElementById('loginEmail').value = novoUsuario.email;
         }
 
-        function handleLogout() {
-            document.getElementById('dashboard').classList.remove('active');
-            
-            document.getElementById('authContainer').style.display = 'flex';
-            
-            document.getElementById('loginForm').reset();
-            document.getElementById('registerForm').reset();
+        function sair() {
+            localStorage.removeItem('sessao');
+            sessionStorage.removeItem('sessao');
+            mostrarLogin();
         }
 
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.style.boxShadow = '0 2px 20px rgba(17, 46, 74, 0.15)';
-            } else {
-                nav.style.boxShadow = '0 2px 10px rgba(17, 46, 74, 0.1)';
-            }
-        });
+        // ==========================================
+        // CARREGAR CURSOS
+        // ==========================================
+
+        function carregarCursos(curso) {
+            const cursosMap = {
+                'Ciência da Computação': [
+                    { icone: '💻', nome: 'Algoritmos', area: 'Ciências Exatas', artigos: 24, areaId: 1 },
+                    { icone: '🤖', nome: 'Inteligência Artificial', area: 'Ciências Exatas', artigos: 18, areaId: 1 },
+                    { icone: '📊', nome: 'Banco de Dados', area: 'Ciências Exatas', artigos: 15, areaId: 1 }
+                ],
+                'Engenharia': [
+                    { icone: '🏗️', nome: 'Estruturas', area: 'Ciências Exatas', artigos: 20, areaId: 1 },
+                    { icone: '📐', nome: 'Materiais', area: 'Ciências Exatas', artigos: 12, areaId: 1 }
+                ],
+                'Medicina': [
+                    { icone: '🧬', nome: 'Anatomia', area: 'Ciências Biológicas', artigos: 30, areaId: 2 },
+                    { icone: '❤️', nome: 'Cardiologia', area: 'Ciências Biológicas', artigos: 22, areaId: 2 }
+                ],
+                'Direito': [
+                    { icone: '⚖️', nome: 'Direito Constitucional', area: 'Ciências Sociais', artigos: 25, areaId: 4 },
+                    { icone: '📜', nome: 'Direito Civil', area: 'Ciências Sociais', artigos: 20, areaId: 4 }
+                ],
+                'Psicologia': [
+                    { icone: '🧠', nome: 'Psicologia Cognitiva', area: 'Ciências Humanas', artigos: 18, areaId: 3 },
+                    { icone: '💬', nome: 'Psicologia Social', area: 'Ciências Humanas', artigos: 15, areaId: 3 }
+                ]
+            };
+
+            const cursos = cursosMap[curso] || cursosMap['Ciência da Computação'];
+            
+            document.getElementById('gridCursos').innerHTML = cursos.map(c => `
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-icon">${c.icone}</div>
+                        <h3 class="course-title">${c.nome}</h3>
+                        <p class="course-subtitle">${c.area}</p>
+                    </div>
+                    <div class="course-body">
+                        <div class="course-stats">
+                            <div class="stat">
+                                <span class="stat-value">${c.artigos}</span>
+                                <span class="stat-label">Artigos</span>
+                            </div>
+                        </div>
+                        <a href="areas.html?area=${c.areaId}" class="btn-access">Acessar →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==========================================
+        // INICIALIZAÇÃO
+        // ==========================================
+
+        // Verifica se já está logado
+        const sessao = JSON.parse(localStorage.getItem('sessao') || sessionStorage.getItem('sessao') || 'null');
+        
+        if (sessao) {
+            mostrarDashboard(sessao);
+        } else {
+            mostrarLogin();
+        }
+
+        // Verifica erro de não autenticado na URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('erro') === 'nao_autenticado') {
+            document.getElementById('alertaErro').textContent = '⚠️ Faça login para acessar o repositório';
+            document.getElementById('alertaErro').classList.add('ativo');
+        }
     </script>
 </body>
 </html>
