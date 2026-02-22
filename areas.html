@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Áreas de Conhecimento - LEGWER'S</title>
+    <link rel="stylesheet" href="/estilos/principal.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bege: #FFF9EB;
+            --azul-medio: #6386AC;
+            --azul-escuro: #112E4A;
+            --preto: #000000;
+            --branco: #FFFFFF;
+            --verde: #50C78E;
+            --vermelho: #C75450;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bege);
+            color: var(--azul-escuro);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navegação */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 249, 235, 0.98);
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--azul-medio);
+            box-shadow: 0 2px 10px rgba(17, 46, 74, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: var(--azul-escuro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bege);
+            font-size: 1rem;
+        }
+
+        .menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--azul-escuro);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--azul-medio);
+            transition: width 0.3s ease;
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        .botoes-acesso {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .botao {
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .botao-aluno {
+            background: transparent;
+            color: var(--azul-escuro);
+            border: 2px solid var(--azul-escuro);
+        }
+
+        .botao-aluno:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .botao-admin {
+            background: var(--azul-escuro);
+            color: var(--bege);
+            border: 2px solid var(--azul-escuro);
+        }
+
+        .botao-admin:hover {
+            background: var(--azul-medio);
+            border-color: var(--azul-medio);
+        }
+
+        /* Container Principal */
+        .areas-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+        }
+
+        /* Sidebar de Áreas */
+        .areas-sidebar {
+            width: 350px;
+            background: var(--branco);
+            border-right: 2px solid rgba(99, 134, 172, 0.2);
+            padding: 2rem;
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 80px;
+        }
+
+        .areas-header {
+            margin-bottom: 2rem;
+        }
+
+        .areas-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--azul-escuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .areas-header p {
+            font-size: 0.9rem;
+            color: var(--azul-medio);
+        }
+
+        .area-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            border: 2px solid transparent;
+        }
+
+        .area-item:hover {
+            background: rgba(99, 134, 172, 0.1);
+            border-color: var(--azul-medio);
+        }
+
+        .area-item.ativa {
+            background: var(--azul-escuro);
+            color: var(--bege);
+            border-color: var(--azul-escuro);
+        }
+
+        .area-icone {
+            width: 45px;
+            height: 45px;
+            background: rgba(99, 134, 172, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .area-item.ativa .area-icone {
+            background: rgba(255, 249, 235, 0.2);
+        }
+
+        .area-info h3 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .area-info p {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Conteúdo Principal */
+        .conteudo-principal {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            height: calc(100vh - 80px);
+        }
+
+        /* Seção de Lista de Documentos */
+        .secao-lista {
+            display: none;
+        }
+
+        .secao-lista.ativa {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .lista-header {
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumbs {
+            color: var(--azul-medio);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lista-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--azul-escuro);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .filtros-barra {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filtro-btn {
+            padding: 0.6rem 1.2rem;
+            border: 2px solid var(--azul-escuro);
+            background: transparent;
+            color: var(--azul-escuro);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filtro-btn:hover, .filtro-btn.ativo {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .pesquisa-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid rgba(99, 134, 172, 0.3);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            background: var(--branco);
+        }
+
+        .pesquisa-input:focus {
+            outline: none;
+            border-color: var(--azul-medio);
+        }
+
+        /* Grid de Documentos */
+        .documentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .documento-card {
+            background: var(--branco);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .documento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(17, 46, 74, 0.15);
+            border-color: var(--azul-medio);
+        }
+
+        .doc-tipo {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(99, 134, 172, 0.15);
+            color: var(--azul-escuro);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .documento-card h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--azul-escuro);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        .doc-autor {
+            color: var(--azul-medio);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: rgba(17, 46, 74, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .doc-acoes-card {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-card {
+            flex: 1;
+            padding: 0.6rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ver-card {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .btn-ver-card:hover {
+            background: var(--azul-medio);
+        }
+
+        .btn-baixar-card {
+            background: var(--bege);
+            color: var(--azul-escuro);
+            border: 2px solid var(--azul-escuro);
+        }
+
+        .btn-baixar-card:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        /* Seção de Visualização de Documento */
+        .secao-documento {
+            display: none;
+            background: var(--branco);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .secao-documento.ativa {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .doc-viewer-header {
+            background: var(--azul-escuro);
+            color: var(--bege);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .doc-viewer-titulo h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .doc-viewer-titulo p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .btn-voltar-lista {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 249, 235, 0.2);
+            color: var(--bege);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar-lista:hover {
+            background: rgba(255, 249, 235, 0.3);
+        }
+
+        .doc-viewer-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 600px;
+        }
+
+        .doc-sidebar {
+            background: var(--bege);
+            padding: 2rem;
+            border-right: 1px solid rgba(99, 134, 172, 0.2);
+        }
+
+        .doc-meta-detalhada {
+            margin-bottom: 2rem;
+        }
+
+        .meta-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .meta-label {
+            font-size: 0.8rem;
+            color: var(--azul-medio);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-valor {
+            font-size: 1rem;
+            color: var(--azul-escuro);
+            font-weight: 500;
+        }
+
+        .doc-acoes-viewer {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .btn-acao-viewer {
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download-viewer {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .btn-download-viewer:hover {
+            background: var(--azul-medio);
+        }
+
+        .btn-favorito-viewer {
+            background: transparent;
+            color: var(--azul-escuro);
+            border: 2px solid var(--azul-escuro);
+        }
+
+        .btn-favorito-viewer:hover {
+            background: var(--azul-escuro);
+            color: var(--bege);
+        }
+
+        .btn-share-viewer {
+            background: transparent;
+            color: var(--azul-medio);
+            border: 2px solid var(--azul-medio);
+        }
+
+        .btn-share-viewer:hover {
+            background: var(--azul-medio);
+            color: var(--bege);
+        }
+
+        .pdf-viewer-area {
+            background: #525659;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 600px;
+        }
+
+        .pdf-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--branco);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-toolbar {
+            background: var(--azul-escuro);
+            color: var(--bege);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .pdf-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pdf-nav button {
+            background: rgba(255, 249, 235, 0.2);
+            border: none;
+            color: var(--bege);
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .pdf-content {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .pdf-icon-big {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .pdf-content h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--azul-escuro);
+            margin-bottom: 1rem;
+        }
+
+        .pdf-content p {
+            color: var(--azul-medio);
+            margin-bottom: 2rem;
+        }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .areas-sidebar {
+                width: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .areas-container {
+                flex-direction: column;
+            }
+
+            .areas-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 2px solid rgba(99, 134, 172, 0.2);
+            }
+
+            .conteudo-principal {
+                height: auto;
+            }
+
+            .documentos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-viewer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .doc-sidebar {
+                border-right: none;
+                border-bottom: 1px solid rgba(99, 134, 172, 0.2);
+            }
+
+            .menu {
+                display: none;
+            }
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--azul-medio);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(99, 134, 172, 0.2);
+            border-top-color: var(--azul-escuro);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: var(--azul-medio);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegação -->
+    <nav>
+        <a href="inicio.html" class="logo">
+            <div class="logo-icon">📚</div>
+            LEGWER'S
+        </a>
+        
+        <ul class="menu">
+            <li><a href="inicio.html">Início</a></li>
+            <li><a href="areas.html" class="ativo">Áreas</a></li>
+            <li><a href="sobre.html">Sobre</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+
+        <div class="botoes-acesso">
+            <a href="area-aluno.html" class="botao botao-aluno">Área do Aluno</a>
+            <a href="area-admin.html" class="botao botao-admin">Administração</a>
+        </div>
+    </nav>
+
+    <!-- Container Principal -->
+    <div class="areas-container">
+        
+        <!-- Sidebar de Áreas -->
+        <aside class="areas-sidebar">
+            <div class="areas-header">
+                <h1>Áreas do Conhecimento</h1>
+                <p>Selecione uma área para explorar</p>
+            </div>
+
+            <div id="listaAreasSidebar">
+                <!-- Áreas carregadas via JS -->
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando áreas...</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="conteudo-principal">
+            
+            <!-- SEÇÃO 1: Lista de Documentos -->
+            <section class="secao-lista ativa" id="secaoLista">
+                <div class="lista-header">
+                    <div class="breadcrumbs">
+                        <a href="inicio.html">Início</a> / <span id="breadcrumbArea">Áreas</span>
+                    </div>
+                    <h2>
+                        <span id="iconeAreaTitulo">📚</span>
+                        <span id="tituloArea">Selecione uma área</span>
+                    </h2>
+                </div>
+
+                <div class="filtros-barra">
+                    <button class="filtro-btn ativo" onclick="filtrarDocumentos('todos')">Todos</button>
+                    <button class="filtro-btn" onclick="filtrarDocumentos('recentes')">Mais Recentes</button>
+                    <button class="filtro-btn" onclick="filtrarDocumentos('downloads')">Mais Baixados</button>
+                    <input type="text" class="pesquisa-input" placeholder="Pesquisar documentos..." onkeyup="pesquisarDocumentos(this.value)">
+                </div>
+
+                <div class="documentos-grid" id="gridDocumentos">
+                    <!-- Documentos carregados via JS -->
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📂</div>
+                        <h3>Selecione uma área</h3>
+                        <p>Escolha uma área de conhecimento no menu lateral para ver os documentos disponíveis.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: Visualização de Documento -->
+            <section class="secao-documento" id="secaoDocumento">
+                <div class="doc-viewer-header">
+                    <div class="doc-viewer-titulo">
+                        <h2 id="viewerTitulo">Título do Documento</h2>
+                        <p id="viewerSubtitulo">Autor • Área</p>
+                    </div>
+                    <button class="btn-voltar-lista" onclick="voltarParaLista()">
+                        ← Voltar para lista
+                    </button>
+                </div>
+
+                <div class="doc-viewer-container">
+                    <!-- Sidebar do Documento -->
+                    <aside class="doc-sidebar">
+                        <div class="doc-meta-detalhada">
+                            <div class="meta-item">
+                                <div class="meta-label">Autor(es)</div>
+                                <div class="meta-valor" id="metaAutor">-</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Área</div>
+                                <div class="meta-valor" id="metaArea">-</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Publicação</div>
+                                <div class="meta-valor" id="metaAno">-</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Páginas</div>
+                                <div class="meta-valor" id="metaPaginas">-</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Tamanho</div>
+                                <div class="meta-valor" id="metaTamanho">-</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Downloads</div>
+                                <div class="meta-valor" id="metaDownloads">-</div>
+                            </div>
+                        </div>
+
+                        <div class="doc-acoes-viewer">
+                            <button class="btn-acao-viewer btn-download-viewer" onclick="downloadDocumento()">
+                                ⬇️ Download PDF
+                            </button>
+                            <button class="btn-acao-viewer btn-favorito-viewer" onclick="favoritarDocumento()">
+                                ⭐ Adicionar aos Favoritos
+                            </button>
+                            <button class="btn-acao-viewer btn-share-viewer" onclick="compartilharDocumento()">
+                                🔗 Compartilhar
+                            </button>
+                        </div>
+                    </aside>
+
+                    <!-- Visualizador de PDF -->
+                    <div class="pdf-viewer-area">
+                        <div class="pdf-container">
+                            <div class="pdf-toolbar">
+                                <span>📄 Visualizador de Documento</span>
+                                <div class="pdf-nav">
+                                    <button onclick="paginaAnterior()">←</button>
+                                    <span>Página <span id="paginaAtual">1</span> de <span id="totalPaginas">-</span></span>
+                                    <button onclick="proximaPagina()">→</button>
+                                </div>
+                            </div>
+                            <div class="pdf-content" id="pdfContent">
+                                <div class="pdf-icon-big">📄</div>
+                                <h3>Visualização do PDF</h3>
+                                <p>O documento será exibido aqui. Em uma implementação completa, o PDF seria renderizado usando PDF.js ou aberto em nova aba.</p>
+                                <button class="btn-acao-viewer btn-download-viewer" onclick="downloadDocumento()">
+                                    📥 Baixar para Visualizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+ <script src="auth.js"></script> 
+    <script>
+
+// ============================================
+// PROTEÇÃO DE LOGIN - EXECUTAR PRIMEIRO
+// ============================================
+
+
+// Verifica login
+const sessao = JSON.parse(localStorage.getItem('sessao') || sessionStorage.getItem('sessao') || 'null');
+
+if (!sessao) {
+    // Não logado - vai para login
+    window.location.href = 'area-aluno.html?erro=nao_autenticado';
+} else {
+    // Logado - mostra nome do usuário
+    console.log('Bem-vindo,', sessao.nome);
+}
+document.addEventListener('DOMContentLoaded', () => {
+    // Verifica autenticação antes de tudo
+    const auth = verificarAutenticacao();
+    
+    if (!auth.autenticado) {
+        // Salva onde queria ir
+        sessionStorage.setItem('redirect_apos_login', window.location.href);
+        // Redireciona para login
+        window.location.href = 'area-aluno.html?erro=nao_autenticado';
+        return; // Para execução
+    }
+    
+    // Se chegou aqui, está autenticado
+    console.log('Usuário autenticado:', auth.usuario.nome);
+    
+    // Mostra nome do usuário na interface
+    mostrarUsuarioLogado(auth.usuario);
+    
+    // Continua com carregamento normal...
+    carregarAreasSidebar();
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const areaId = urlParams.get('area');
+    const docId = urlParams.get('doc');
+    
+    if (docId) {
+        const doc = encontrarDocumento(docId);
+        if (doc) abrirDocumento(doc);
+    } else if (areaId) {
+        selecionarArea(parseInt(areaId));
+    }
+});
+
+function mostrarUsuarioLogado(usuario) {
+    // Adiciona header com info do usuário no topo da página
+    const header = document.createElement('div');
+    header.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 2rem;
+        background: var(--branco);
+        padding: 0.8rem 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        z-index: 100;
+        font-size: 0.9rem;
+    `;
+    header.innerHTML = `
+        <span>👤</span>
+        <span style="font-weight: 600;">${usuario.nome}</span>
+        <button onclick="fazerLogout()" style="
+            background: var(--vermelho);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        ">Sair</button>
+    `;
+    document.body.appendChild(header);
+}
+        // ============================================
+        // DADOS E CONFIGURAÇÕES
+        // ============================================
+
+        const areasConfig = {
+            1: { nome: 'Ciências Exatas', icone: '💻', cor: '#667eea', descricao: 'Matemática, Física, Química e Computação' },
+            2: { nome: 'Ciências Biológicas', icone: '🧬', cor: '#11998e', descricao: 'Biologia, Medicina e Ciências da Saúde' },
+            3: { nome: 'Ciências Humanas', icone: '🏛️', cor: '#fc4a1a', descricao: 'História, Geografia, Filosofia e Sociologia' },
+            4: { nome: 'Ciências Sociais', icone: '📊', cor: '#4facfe', descricao: 'Administração, Economia e Direito' },
+            5: { nome: 'Artes e Design', icone: '🎨', cor: '#fa709a', descricao: 'Artes Visuais, Música e Design' },
+            6: { nome: 'Ciências Agrárias', icone: '🌱', cor: '#43e97b', descricao: 'Agronomia, Zootecnia e Meio Ambiente' }
+        };
+
+        // Banco de dados de documentos (simulação)
+        const documentosDB = {
+            1: [ // Ciências Exatas
+                { id: 101, titulo: 'Inteligência Artificial na Educação', autor: 'Dr. Carlos Silva', tipo: 'Artigo', ano: 2026, paginas: 25, tamanho: '3.2 MB', downloads: 128, resumo: 'Aplicações de IA no ensino.', arquivo: 'documentos/doc_1.pdf' },
+                { id: 102, titulo: 'Algoritmos de Machine Learning', autor: 'Dra. Ana Costa', tipo: 'Livro', ano: 2025, paginas: 180, downloads: 89, tamanho: '8.5 MB', resumo: 'Fundamentos de ML.' },
+                { id: 103, titulo: 'Computação Quântica: Introdução', autor: 'Prof. João Lima', tipo: 'Artigo', ano: 2026, paginas: 15, downloads: 245, tamanho: '2.1 MB', resumo: 'Introdução à computação quântica.' },
+                { id: 104, titulo: 'Big Data e Análise de Dados', autor: 'Dr. Pedro Santos', tipo: 'Pesquisa', ano: 2025, paginas: 45, downloads: 167, tamanho: '4.8 MB', resumo: 'Análise de grandes volumes de dados.' }
+            ],
+            2: [ // Ciências Biológicas
+                { id: 201, titulo: 'Genética Molecular Avançada', autor: 'Dra. Maria Oliveira', tipo: 'Artigo', ano: 2026, paginas: 32, downloads: 234, tamanho: '4.5 MB', resumo: 'Técnicas modernas em genética.' },
+                { id: 202, titulo: 'Biotecnologia e Saúde', autor: 'Dr. Roberto Ferreira', tipo: 'Livro', ano: 2025, paginas: 220, downloads: 156, tamanho: '12.3 MB', resumo: 'Aplicações da biotecnologia.' }
+            ],
+            3: [ // Ciências Humanas
+                { id: 301, titulo: 'História da Filosofia Ocidental', autor: 'Prof. Antônio Souza', tipo: 'Livro', ano: 2024, paginas: 350, downloads: 412, tamanho: '15.2 MB', resumo: 'Panorama da filosofia ocidental.' },
+                { id: 302, titulo: 'Geopolítica Contemporânea', autor: 'Dra. Fernanda Lima', tipo: 'Artigo', ano: 2026, paginas: 28, downloads: 198, tamanho: '3.8 MB', resumo: 'Análise geopolítica atual.' }
+            ],
+            4: [ // Ciências Sociais
+                { id: 401, titulo: 'Economia Comportamental', autor: 'Dr. Ricardo Mendes', tipo: 'Artigo', ano: 2026, paginas: 22, downloads: 267, tamanho: '3.1 MB', resumo: 'Comportamento econômico dos indivíduos.' },
+                { id: 402, titulo: 'Direito Constitucional Aplicado', autor: 'Dra. Juliana Costa', tipo: 'Livro', ano: 2025, paginas: 280, downloads: 189, tamanho: '9.7 MB', resumo: 'Aplicações práticas do direito constitucional.' }
+            ],
+            5: [ // Artes e Design
+                { id: 501, titulo: 'Design Thinking na Prática', autor: 'Prof. Marcelo Silva', tipo: 'Artigo', ano: 2026, paginas: 18, downloads: 445, tamanho: '2.9 MB', resumo: 'Metodologia de design thinking.' },
+                { id: 502, titulo: 'História da Arte Moderna', autor: 'Dra. Carla Oliveira', tipo: 'Livro', ano: 2024, paginas: 240, downloads: 312, tamanho: '11.5 MB', resumo: 'Movimentos artísticos modernos.' }
+            ],
+            6: [ // Ciências Agrárias
+                { id: 601, titulo: 'Agricultura Sustentável', autor: 'Dr. Luís Ferreira', tipo: 'Artigo', ano: 2026, paginas: 30, downloads: 178, tamanho: '4.2 MB', resumo: 'Práticas agrícolas sustentáveis.' },
+                { id: 602, titulo: 'Zootecnia Moderna', autor: 'Dra. Paula Santos', tipo: 'Livro', ano: 2025, paginas: 195, downloads: 134, tamanho: '8.9 MB', resumo: 'Técnicas modernas em zootecnia.' }
+            ]
+        };
+
+        // Estado atual
+        let areaAtual = null;
+        let documentoAtual = null;
+        let paginaAtual = 1;
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarAreasSidebar();
+            
+            // Verifica se veio com parâmetro de área ou documento
+            const urlParams = new URLSearchParams(window.location.search);
+            const areaId = urlParams.get('area');
+            const docId = urlParams.get('doc');
+            
+            if (docId) {
+                // Abre direto o documento
+                const doc = encontrarDocumento(docId);
+                if (doc) {
+                    abrirDocumento(doc);
+                }
+            } else if (areaId) {
+                // Seleciona a área
+                selecionarArea(parseInt(areaId));
+            }
+        });
+
+        // ============================================
+        // SIDEBAR DE ÁREAS
+        // ============================================
+
+        function carregarAreasSidebar() {
+            const container = document.getElementById('listaAreasSidebar');
+            
+            const html = Object.entries(areasConfig).map(([id, area]) => `
+                <div class="area-item" onclick="selecionarArea(${id})" id="area-${id}">
+                    <div class="area-icone">${area.icone}</div>
+                    <div class="area-info">
+                        <h3>${area.nome}</h3>
+                        <p>${area.descricao}</p>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
+        }
+
+        function selecionarArea(id) {
+            areaAtual = id;
+            
+            // Atualiza UI da sidebar
+            document.querySelectorAll('.area-item').forEach(el => el.classList.remove('ativa'));
+            document.getElementById(`area-${id}`).classList.add('ativa');
+            
+            // Atualiza header da lista
+            const area = areasConfig[id];
+            document.getElementById('breadcrumbArea').textContent = area.nome;
+            document.getElementById('iconeAreaTitulo').textContent = area.icone;
+            document.getElementById('tituloArea').textContent = area.nome;
+            
+            // Mostra lista de documentos
+            mostrarSecao('lista');
+            carregarDocumentosArea(id);
+            
+            // Atualiza URL
+            history.pushState(null, null, `areas.html?area=${id}`);
+        }
+
+        // ============================================
+        // LISTA DE DOCUMENTOS
+        // ============================================
+
+        function carregarDocumentosArea(areaId, filtro = 'todos') {
+            const container = document.getElementById('gridDocumentos');
+            let docs = documentosDB[areaId] || [];
+            
+            // Aplica filtros
+            if (filtro === 'recentes') {
+                docs = [...docs].sort((a, b) => b.ano - a.ano);
+            } else if (filtro === 'downloads') {
+                docs = [...docs].sort((a, b) => b.downloads - a.downloads);
+            }
+            
+            if (docs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>Nenhum documento encontrado</h3>
+                        <p>Esta área ainda não possui documentos cadastrados.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = docs.map(doc => `
+                <div class="documento-card" onclick="abrirDocumentoPorId(${doc.id})">
+                    <span class="doc-tipo">${doc.tipo}</span>
+                    <h3>${doc.titulo}</h3>
+                    <p class="doc-autor">👤 ${doc.autor}</p>
+                    <div class="doc-meta">
+                        <span>📄 ${doc.paginas || '--'} pág</span>
+                        <span>📅 ${doc.ano}</span>
+                        <span>⬇️ ${doc.downloads}</span>
+                    </div>
+                    <div class="doc-acoes-card">
+                        <button class="btn-card btn-ver-card" onclick="event.stopPropagation(); abrirDocumentoPorId(${doc.id})">
+                            👁️ Ver
+                        </button>
+                        <button class="btn-card btn-baixar-card" onclick="event.stopPropagation(); baixarDocumento(${doc.id})">
+                            ⬇️ Baixar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filtrarDocumentos(tipo) {
+            // Atualiza botões ativos
+            document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('ativo'));
+            event.target.classList.add('ativo');
+            
+            if (areaAtual) {
+                carregarDocumentosArea(areaAtual, tipo);
+            }
+        }
+
+        function pesquisarDocumentos(query) {
+            if (!areaAtual || !query) {
+                if (areaAtual) carregarDocumentosArea(areaAtual);
+                return;
+            }
+            
+            const docs = documentosDB[areaAtual] || [];
+            const filtrados = docs.filter(d => 
+                d.titulo.toLowerCase().includes(query.toLowerCase()) ||
+                d.autor.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const container = document.getElementById('gridDocumentos');
+            if (filtrados.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-state-icon">🔍</div>
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>Tente buscar com termos diferentes.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Renderiza filtrados (mesmo formato de carregarDocumentosArea)
+            container.innerHTML = filtrados.map(doc => `
+                <div class="documento-card" onclick="abrirDocumentoPorId(${doc.id})">
+                    <span class="doc-tipo">${doc.tipo}</span>
+                    <h3>${doc.titulo}</h3>
+                    <p class="doc-autor">👤 ${doc.autor}</p>
+                    <div class="doc-meta">
+                        <span>📄 ${doc.paginas || '--'} pág</span>
+                        <span>📅 ${doc.ano}</span>
+                        <span>⬇️ ${doc.downloads}</span>
+                    </div>
+                    <div class="doc-acoes-card">
+                        <button class="btn-card btn-ver-card" onclick="event.stopPropagation(); abrirDocumentoPorId(${doc.id})">
+                            👁️ Ver
+                        </button>
+                        <button class="btn-card btn-baixar-card" onclick="event.stopPropagation(); baixarDocumento(${doc.id})">
+                            ⬇️ Baixar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // VISUALIZAÇÃO DE DOCUMENTO
+        // ============================================
+
+        function encontrarDocumento(id) {
+            for (const areaDocs of Object.values(documentosDB)) {
+                const doc = areaDocs.find(d => d.id === parseInt(id));
+                if (doc) return doc;
+            }
+            return null;
+        }
+
+        function abrirDocumentoPorId(id) {
+            const doc = encontrarDocumento(id);
+            if (doc) {
+                abrirDocumento(doc);
+            }
+        }
+
+        function abrirDocumento(doc) {
+            documentoAtual = doc;
+            paginaAtual = 1;
+            
+            // Atualiza metadados
+            document.getElementById('viewerTitulo').textContent = doc.titulo;
+            document.getElementById('viewerSubtitulo').textContent = `${doc.autor} • ${areasConfig[areaAtual]?.nome || 'Geral'}`;
+            
+            document.getElementById('metaAutor').textContent = doc.autor;
+            document.getElementById('metaArea').textContent = areasConfig[areaAtual]?.nome || '-';
+            document.getElementById('metaAno').textContent = doc.ano;
+            document.getElementById('metaPaginas').textContent = doc.paginas || '-';
+            document.getElementById('metaTamanho').textContent = doc.tamanho || '-';
+            document.getElementById('metaDownloads').textContent = doc.downloads;
+            
+            document.getElementById('totalPaginas').textContent = doc.paginas || '-';
+            document.getElementById('paginaAtual').textContent = '1';
+            
+            // Mostra seção do documento
+            mostrarSecao('documento');
+            
+            // Atualiza URL
+            history.pushState(null, null, `areas.html?doc=${doc.id}`);
+            
+            // Rola para topo
+            document.querySelector('.conteudo-principal').scrollTop = 0;
+        }
+
+        function mostrarSecao(secao) {
+            document.getElementById('secaoLista').classList.remove('ativa');
+            document.getElementById('secaoDocumento').classList.remove('ativa');
+            
+            if (secao === 'lista') {
+                document.getElementById('secaoLista').classList.add('ativa');
+            } else {
+                document.getElementById('secaoDocumento').classList.add('ativa');
+            }
+        }
+
+        function voltarParaLista() {
+            mostrarSecao('lista');
+            if (areaAtual) {
+                history.pushState(null, null, `areas.html?area=${areaAtual}`);
+            } else {
+                history.pushState(null, null, 'areas.html');
+            }
+        }
+
+        // ============================================
+        // AÇÕES DO DOCUMENTO
+        // ============================================
+
+        function downloadDocumento() {
+            if (!documentoAtual) return;
+            
+            // Cria link de download
+            const link = document.createElement('a');
+            link.href = documentoAtual.arquivo || '#';
+            link.download = `documento_${documentoAtual.id}.pdf`;
+            link.target = '_blank';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Incrementa contador
+            documentoAtual.downloads++;
+            document.getElementById('metaDownloads').textContent = documentoAtual.downloads;
+            
+            alert(`📥 Download iniciado: ${documentoAtual.titulo}`);
+        }
+
+        function baixarDocumento(id) {
+            const doc = encontrarDocumento(id);
+            if (!doc) return;
+            
+            const link = document.createElement('a');
+            link.href = doc.arquivo || '#';
+            link.download = `documento_${doc.id}.pdf`;
+            link.target = '_blank';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            doc.downloads++;
+            alert(`📥 Download iniciado: ${doc.titulo}`);
+        }
+
+        function favoritarDocumento() {
+            if (!documentoAtual) return;
+            
+            let favoritos = JSON.parse(localStorage.getItem('legwers_favoritos') || '[]');
+            const existe = favoritos.find(f => f.id === documentoAtual.id);
+            
+            if (existe) {
+                favoritos = favoritos.filter(f => f.id !== documentoAtual.id);
+                alert('❌ Removido dos favoritos');
+            } else {
+                favoritos.push({
+                    id: documentoAtual.id,
+                    titulo: documentoAtual.titulo,
+                    data: new Date().toISOString()
+                });
+                alert('⭐ Adicionado aos favoritos!');
+            }
+            
+            localStorage.setItem('legwers_favoritos', JSON.stringify(favoritos));
+        }
+
+        function compartilharDocumento() {
+            if (!documentoAtual) return;
+            
+            const url = `${window.location.origin}/areas.html?doc=${documentoAtual.id}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: documentoAtual.titulo,
+                    text: 'Confira este documento no LEGWER\'S',
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert('🔗 Link copiado: ' + url);
+                });
+            }
+        }
+
+        // ============================================
+        // NAVEGAÇÃO DO PDF
+        // ============================================
+
+        function paginaAnterior() {
+            if (paginaAtual > 1) {
+                paginaAtual--;
+                document.getElementById('paginaAtual').textContent = paginaAtual;
+            }
+        }
+
+        function proximaPagina() {
+            const total = parseInt(document.getElementById('totalPaginas').textContent) || 1;
+            if (paginaAtual < total) {
+                paginaAtual++;
+                document.getElementById('paginaAtual').textContent = paginaAtual;
+            }
+        }
+
+        // ============================================
+        // SCROLL DA NAVEGAÇÃO
+        // ============================================
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(17, 46, 74, 0.15)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(17, 46, 74, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
