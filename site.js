@@ -1,22 +1,21 @@
 // ============================================
-// REPOSITÓRIO ACADÊMICO - Funcionalidades
+// SITE.JS - JavaScript do Repositório Acadêmico
 // ============================================
 
-// Quando a página carregar
+// Carregar dados ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
-    carregarInformacoes();
+    carregarEstatisticas();
     carregarAreas();
     carregarDocumentosRecentes();
-    configurarNavegacao();
 });
 
 // ============================================
-// CARREGAR INFORMAÇÕES DO SITE
+// CARREGAR ESTATÍSTICAS
 // ============================================
 
-async function carregarInformacoes() {
+async function carregarEstatisticas() {
     try {
-        const resposta = await fetch('/informacoes-do-site');
+        const resposta = await fetch('/api/estatisticas');
         const dados = await resposta.json();
         
         document.getElementById('quantidadeArtigos').textContent = dados.totalDeArtigos;
@@ -24,7 +23,7 @@ async function carregarInformacoes() {
         document.getElementById('quantidadeDownloads').textContent = dados.totalDeDownloads;
         
     } catch (erro) {
-        console.log('Usando valores padrão');
+        // Valores padrão se API falhar
         document.getElementById('quantidadeArtigos').textContent = '600';
         document.getElementById('quantidadeAreas').textContent = '6';
         document.getElementById('quantidadeDownloads').textContent = '200';
@@ -32,14 +31,14 @@ async function carregarInformacoes() {
 }
 
 // ============================================
-// CARREGAR ÁREAS DE CONHECIMENTO
+// CARREGAR ÁREAS
 // ============================================
 
 async function carregarAreas() {
-    const lista = document.getElementById('listaDeAreas');
+    const container = document.getElementById('listaDeAreas');
     
     try {
-        const resposta = await fetch('/buscar-areas');
+        const resposta = await fetch('/api/areas');
         const areas = await resposta.json();
         
         const icones = {
@@ -51,18 +50,60 @@ async function carregarAreas() {
             'Ciências Agrárias': '🌱'
         };
         
-        lista.innerHTML = areas.map(area => `
-            <div class="cartao-area" onclick="entrarNaArea(${area.id})">
-                <div class="area-icone">${icones[area.nome] || '📚'}</div>
-                <h3 class="area-titulo">${area.nome}</h3>
-                <div class="area-quantidade">${area.documentos} documentos</div>
-                <p class="area-descricao">${area.descricao}</p>
+        container.innerHTML = areas.map(area => `
+            <div class="area-card" onclick="verConteudosArea(${area.id})">
+                <div class="area-icon">${icones[area.nome] || '📚'}</div>
+                <h3 class="area-title">${area.nome}</h3>
+                <div class="area-count">${area.documentos} documentos</div>
+                <p class="area-desc">${area.descricao}</p>
             </div>
         `).join('');
         
     } catch (erro) {
-        lista.innerHTML = '<p class="carregando">Erro ao carregar. Tente recarregar a página.</p>';
+        // Dados estáticos se API falhar
+        const areasEstaticas = [
+            { id: 1, nome: 'Ciências Exatas', descricao: 'Matemática, Física, Química, Computação e Engenharias', documentos: 100 },
+            { id: 2, nome: 'Ciências Biológicas', descricao: 'Biologia, Medicina, Biotecnologia e Ciências da Saúde', documentos: 100 },
+            { id: 3, nome: 'Ciências Humanas', descricao: 'História, Geografia, Filosofia, Sociologia e Psicologia', documentos: 100 },
+            { id: 4, nome: 'Ciências Sociais', descricao: 'Administração, Economia, Direito e Ciências Políticas', documentos: 100 },
+            { id: 5, nome: 'Artes e Design', descricao: 'Artes Visuais, Música, Design e Arquitetura', documentos: 100 },
+            { id: 6, nome: 'Ciências Agrárias', descricao: 'Agronomia, Zootecnia, Engenharia Florestal e Meio Ambiente', documentos: 100 }
+        ];
+        
+        const icones = {
+            'Ciências Exatas': '💻',
+            'Ciências Biológicas': '🧬',
+            'Ciências Humanas': '🏛️',
+            'Ciências Sociais': '📊',
+            'Artes e Design': '🎨',
+            'Ciências Agrárias': '🌱'
+        };
+        
+        container.innerHTML = areasEstaticas.map(area => `
+            <div class="area-card" onclick="verConteudosArea(${area.id})">
+                <div class="area-icon">${icones[area.nome] || '📚'}</div>
+                <h3 class="area-title">${area.nome}</h3>
+                <div class="area-count">${area.documentos} documentos</div>
+                <p class="area-desc">${area.descricao}</p>
+            </div>
+        `).join('');
     }
+}
+
+// ============================================
+// FUNÇÃO VER CONTEÚDOS DA ÁREA (ATUALIZADA)
+// ============================================
+
+// Atualize estas funções para linkar corretamente:
+
+function verConteudosArea(areaId) {
+    // Agora vai para areas.html com parâmetro da área
+    window.location.href = 'areas.html?area=' + areaId;
+}
+
+function verDocumento(id) {
+    // Vai para areas.html com parâmetro do documento
+    window.location.href = 'areas.html?doc=' + id;
 }
 
 // ============================================
@@ -73,13 +114,13 @@ async function carregarDocumentosRecentes() {
     const container = document.getElementById('documentosRecentes');
     
     try {
-        const resposta = await fetch('/buscar-documentos');
+        const resposta = await fetch('/api/documentos');
         const documentos = await resposta.json();
         const recentes = documentos.slice(0, 3);
         
         container.innerHTML = recentes.map(doc => `
-            <div class="item-documento" onclick="abrirDocumento(${doc.id})">
-                <div class="doc-icone">📑</div>
+            <div class="doc-item" onclick="verDocumento(${doc.id})">
+                <div class="doc-icon">📑</div>
                 <div>
                     <h4>${doc.titulo}</h4>
                     <p style="font-size: 0.85rem; opacity: 0.7;">${doc.autor} • ${doc.area}</p>
@@ -88,13 +129,27 @@ async function carregarDocumentosRecentes() {
         `).join('');
         
     } catch (erro) {
-        // Dados de exemplo se der erro
+        // Dados estáticos
         container.innerHTML = `
-            <div class="item-documento">
-                <div class="doc-icone">📑</div>
+            <div class="doc-item" onclick="verDocumento(1)">
+                <div class="doc-icon">📑</div>
                 <div>
                     <h4>Inteligência Artificial na Educação</h4>
                     <p style="font-size: 0.85rem; opacity: 0.7;">Dr. Silva • Ciência da Computação</p>
+                </div>
+            </div>
+            <div class="doc-item" onclick="verDocumento(2)">
+                <div class="doc-icon">📑</div>
+                <div>
+                    <h4>Sustentabilidade Urbana</h4>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">Dra. Santos • Engenharia Civil</p>
+                </div>
+            </div>
+            <div class="doc-item" onclick="verDocumento(3)">
+                <div class="doc-icon">📑</div>
+                <div>
+                    <h4>Novas Perspectivas em Psicologia</h4>
+                    <p style="font-size: 0.85rem; opacity: 0.7;">Dr. Oliveira • Psicologia</p>
                 </div>
             </div>
         `;
@@ -102,8 +157,12 @@ async function carregarDocumentosRecentes() {
 }
 
 // ============================================
-// FUNÇÕES DE INTERAÇÃO
+// FUNÇÕES DE NAVEGAÇÃO
 // ============================================
+
+function verDocumento(id) {
+    window.location.href = '/documento/' + id;
+}
 
 function pesquisar() {
     const termo = document.getElementById('campoPesquisa').value;
@@ -111,17 +170,7 @@ function pesquisar() {
         alert('Digite algo para pesquisar');
         return;
     }
-    alert(`Pesquisando por: "${termo}"\n\nFuncionalidade em desenvolvimento`);
-}
-
-function entrarNaArea(id) {
-    console.log('Entrando na área:', id);
-    alert(`Área ${id} - Em desenvolvimento`);
-}
-
-function abrirDocumento(id) {
-    console.log('Abrindo documento:', id);
-    alert(`Documento ${id} - Em desenvolvimento`);
+    alert('Pesquisando por: "' + termo + '"\n\nFuncionalidade em desenvolvimento');
 }
 
 function abrirFavoritos() {
@@ -137,28 +186,31 @@ function abrirDownloads() {
 }
 
 // ============================================
-// NAVEGAÇÃO SUAVE
+// FUNÇÕES DE NAVEGAÇÃO - LINKADAS CORRETAMENTE
 // ============================================
 
-function configurarNavegacao() {
-    // Links suaves
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const destino = document.querySelector(link.getAttribute('href'));
-            if (destino) {
-                destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
+// Quando clica em uma área (os 6 cards)
+function verConteudosArea(areaId) {
+    // Link para lista-documentos.html com ID da área
+    window.location.href = 'lista-documentos.html?area=' + areaId;
+}
 
-    // Sombra no menu ao rolar
-    window.addEventListener('scroll', () => {
-        const nav = document.querySelector('nav');
-        if (window.scrollY > 50) {
-            nav.style.boxShadow = '0 2px 20px rgba(17, 46, 74, 0.1)';
-        } else {
-            nav.style.boxShadow = '0 2px 10px rgba(17, 46, 74, 0.1)';
+// Quando clica em um documento específico
+function verDocumento(id) {
+    // Link para documento.html com ID do documento
+    window.location.href = 'documento.html?id=' + id;
+}
+
+// ============================================
+// SCROLL SUAVE
+// ============================================
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const destino = document.querySelector(this.getAttribute('href'));
+        if (destino) {
+            destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
-}
+});
